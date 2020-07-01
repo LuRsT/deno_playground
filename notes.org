@@ -29,3 +29,73 @@ deno run --allow-net web_server.ts
 
 ** How do you know it works?
 curl localhost:8000
+
+* Write your first code with tests and use deno test
+
+** What warnings do you see when it first downloads it’s dependencies? How would you get rid of these? Why would you do this?
+
+*** Running it without an `adder.ts`
+We get an error because deno is trying to look for it
+**** The error
+error: Cannot resolve module "file:///home/lurst/dev/deno_playground/adder.ts" from "file:///home/lurst/dev/deno_playground/adder_test.ts"
+Imported from "file:///home/lurst/dev/deno_playground/adder_test.ts:1"
+
+*** Running it with an empty `adder.ts` file
+It fails with a SyntaxError because there is no "export" called 'add'
+
+**** The error
+Download https://deno.land/std/testing/asserts.ts
+Warning Implicitly using master branch https://deno.land/std/testing/asserts.ts
+Download https://deno.land/std/fmt/colors.ts
+Download https://deno.land/std/testing/diff.ts
+Warning Implicitly using master branch https://deno.land/std/fmt/colors.ts
+Warning Implicitly using master branch https://deno.land/std/testing/diff.ts
+Check file:///home/lurst/dev/deno_playground/.deno.test.ts
+error: Uncaught SyntaxError: The requested module './adder.ts' does not provide an export named 'add'
+
+*** Runnning it with an "export functionadd(){}" in adder.ts
+Still fails with
+
+**** The error
+Check file:///home/lurst/dev/deno_playground/.deno.test.ts
+error: TS2554 [ERROR]: Expected 0 arguments, but got 2.
+  assertEquals(add(3, 5), 8);
+                   ~~~~
+    at file:///home/lurst/dev/deno_playground/adder_test.ts:5:20
+
+
+*** Running it with an "export function add(a , b){return a + b}" in adder.ts
+Still fails with
+
+**** The error
+Check file:///home/lurst/dev/deno_playground/.deno.test.ts
+error: TS7006 [ERROR]: Parameter 'a' implicitly has an 'any' type.
+export function add(a, b){return a + b}
+                    ^
+    at file:///home/lurst/dev/deno_playground/adder.ts:1:21
+
+TS7006 [ERROR]: Parameter 'b' implicitly has an 'any' type.
+export function add(a, b){return a + b}
+                       ^
+    at file:///home/lurst/dev/deno_playground/adder.ts:1:24
+
+Found 2 errors.
+
+*** Running it with "export function add(a: number, b: number){return a + b}" in adder.ts
+SUCCESS!
+
+**** The output
+Check file:///home/lurst/dev/deno_playground/.deno.test.ts
+running 1 tests
+test add ... ok (2ms)
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out (4ms)
+** What did you have to do that was Typescript specific?
+Adding the keyword "export" to the function so it's public, and adding a type to each of the funtion arguments
+
+** What does the first line tell you about how imports/exports work within your project?
+The first line of the test file tells me about which functions are expected to be public.
+** Where can you find the documentation for the Deno.test function?
+In the standard lib manual: https://deno.land/manual/testing
+** Where can you read the code for the assertEquals function?
+In the assertions section of the standard lib manual: https://deno.land/manual/testing/assertions#equality

@@ -1,0 +1,31 @@
+
+* Run your first web server by importing a module and exploring the security model
+
+** What happens?
+When I first ran it, it failed due to a PermissionError, and deno suggested using the flag --allow-net so that deno opens up the port correctly.
+
+*** The PermissionError
+error: Uncaught PermissionDenied: network access to "0.0.0.0:8000", run again with the --allow-net flag
+    at unwrapResponse ($deno$/ops/dispatch_json.ts:42:11)
+    at Object.sendSync ($deno$/ops/dispatch_json.ts:69:10)
+    at Object.listen ($deno$/ops/net.ts:51:10)
+    at Object.listen ($deno$/net.ts:155:22)
+    at serve (server.ts:256:25)
+    at web_server.ts:2:11
+** What is being imported?
+The package server from: https://deno.land/std@0.59.0/http/server.ts in the first line of web_server.ts. I don't know where it's being imported to.
+
+** Does the program make sense to you i.e. do you feel you understand roughly what is going on in each line of code?
+I'm surprised by the asynchornous for loop.
+
+** What’s the output telling you about how imports work?
+It shows a download, but not where it's being saved.
+
+** What’s the output telling you about the security/permissions model?
+That we need an explicit flag in order to use the network
+
+** How do you get the server running?
+deno run --allow-net web_server.ts
+
+** How do you know it works?
+curl localhost:8000

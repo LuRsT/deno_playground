@@ -99,3 +99,12 @@ The first line of the test file tells me about which functions are expected to b
 In the standard lib manual: https://deno.land/manual/testing
 ** Where can you read the code for the assertEquals function?
 In the assertions section of the standard lib manual: https://deno.land/manual/testing/assertions#equality
+
+
+* Extra challenges
+
+** What is the convention around mod.ts files
+** What can you do to ‘lock’ dependencies for production in Deno?
+** What exists in Node but not in the Deno runtime that means many packages will be incompatible? Are there any node packages that are compatible? If so how do you import them?
+** What exists in a browser’s Javascript runtime but not in the Deno runtime?
+** How would you run all the tests for a multi-file project?
